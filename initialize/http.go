@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -22,15 +23,17 @@ func Http() {
 	})
 
 	srv := &http.Server{
-		Addr:    ":8080",
+		Addr:    fmt.Sprintf(":%d", global.Conf.Http.Port),
 		Handler: r,
 	}
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
+			panic(err)
 		}
 	}()
+
+	fmt.Println("Server Run:", fmt.Sprintf("http://localhost:%d", global.Conf.Http.Port))
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)

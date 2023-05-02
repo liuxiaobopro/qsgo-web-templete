@@ -1,2 +1,5 @@
 mysql:
   dns: "root:root@tcp()/test?charset=utf8&parseTime=True&loc=Local"
+
+http:
+  port: 10001
