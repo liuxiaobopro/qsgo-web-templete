@@ -12,8 +12,10 @@ import (
 
 func Config() {
 	var config string
+	var httpPort int
 
 	flag.StringVar(&config, "c", "", "choose config file.")
+	flag.IntVar(&httpPort, "p", 0, "set http port.")
 	flag.Parse()
 
 	if config != "" {
@@ -39,6 +41,10 @@ func Config() {
 	})
 	if err = v.Unmarshal(&global.Conf); err != nil {
 		panic(err)
+	}
+
+	if httpPort != 0 {
+		global.Conf.Http.Port = httpPort
 	}
 
 	global.ZapS.Info("config init success")
