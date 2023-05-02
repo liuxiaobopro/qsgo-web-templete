@@ -11,15 +11,18 @@ import (
 )
 
 func Config() {
-	var config string
-	var httpPort int
+	var (
+		config   string
+		httpPort int
+	)
 
 	flag.StringVar(&config, "c", "", "choose config file.")
 	flag.IntVar(&httpPort, "p", 0, "set http port.")
 	flag.Parse()
 
 	if config != "" {
-		config = fmt.Sprintf("%s-config.yaml", config)
+		global.Conf.Runmode = config
+		config = fmt.Sprintf("config.%s.yaml", config)
 	} else {
 		config = "config.yaml"
 	}
@@ -46,6 +49,4 @@ func Config() {
 	if httpPort != 0 {
 		global.Conf.Http.Port = httpPort
 	}
-
-	global.ZapS.Info("config init success")
 }

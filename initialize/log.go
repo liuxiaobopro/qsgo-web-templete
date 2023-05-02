@@ -7,13 +7,19 @@ import (
 )
 
 func Log() {
-	logger, err := zap.NewDevelopment()
+	var (
+		logger *zap.Logger
+		err    error
+	)
+	if global.Conf.Runmode == global.PROD {
+		logger, err = zap.NewProduction()
+	} else {
+		logger, err = zap.NewDevelopment()
+	}
 	if err != nil {
 		panic(err)
 	}
 	defer logger.Sync()
 	sugar := logger.Sugar()
 	global.ZapS = sugar
-
-	global.ZapS.Info("log init success")
 }

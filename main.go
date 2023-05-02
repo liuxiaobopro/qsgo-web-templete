@@ -5,7 +5,8 @@ import (
 )
 
 func main() {
-	initialize.Log()
 	initialize.Config()
+	initialize.Log()
+	initialize.Db()
 	initialize.Http()
 }
