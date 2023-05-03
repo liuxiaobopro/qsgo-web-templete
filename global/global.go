@@ -4,6 +4,7 @@ import (
 	"qsgo-web-templete/config"
 
 	"go.uber.org/zap"
+	"xorm.io/xorm"
 )
 
 const (
@@ -14,4 +15,5 @@ const (
 var (
 	ZapS *zap.SugaredLogger
 	Conf config.Conf
+	DB   *xorm.Engine
 )

@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"qsgo-web-templete/controller"
 	"qsgo-web-templete/global"
 
 	"github.com/gin-gonic/gin"
@@ -19,4 +20,9 @@ func AddRouter(r *gin.Engine) {
 			c.JSON(http.StatusOK, conf)
 		})
 	}
+
+	//#region demo
+	r.GET("/demo", controller.DemoController.IndexGet)
+	r.POST("/demo", controller.DemoController.IndexPost)
+	//#endregion
 }
