@@ -1,7 +1,7 @@
 runmode: "default"
 
 mysql:
-  dns: "root:root@tcp()/test?charset=utf8&parseTime=True&loc=Local"
+  dns: "root:111111@tcp(127.0.0.1:3306)/qsgo?charset=utf8mb4"
 
 http:
   port: 10001
