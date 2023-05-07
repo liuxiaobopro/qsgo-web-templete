@@ -30,6 +30,7 @@ type tplInfo struct {
 	Package      string
 	PackageUpper string
 	Project      string
+	Cols         []string
 }
 
 var (
@@ -117,7 +118,7 @@ func (g *genXormDao) Gen() error {
 			if !os.IsNotExist(err) {
 				return err
 			} else {
-				if err := g.createProgramDaoFile(programDaoFilePathItem, v.tableName); err != nil {
+				if err := g.createProgramDaoFile(programDaoFilePathItem, v.tableName, v.cols); err != nil {
 					return err
 				}
 			}
@@ -128,7 +129,7 @@ func (g *genXormDao) Gen() error {
 			}
 
 			// 删除成功，创建
-			if err := g.createProgramDaoFile(programDaoFilePathItem, v.tableName); err != nil {
+			if err := g.createProgramDaoFile(programDaoFilePathItem, v.tableName, v.cols); err != nil {
 				return err
 			}
 		}
@@ -148,11 +149,16 @@ func (g *genXormDao) Gen() error {
 	return nil
 }
 
-func (g *genXormDao) createProgramDaoFile(path, tName string) error {
+func (g *genXormDao) createProgramDaoFile(path, tName string, cols []string) error {
 	var (
-		file *os.File
-		err  error
+		file      *os.File
+		err       error
+		colsUpper []string
 	)
+
+	for _, v := range cols {
+		colsUpper = append(colsUpper, stringx.ReplaceCharAfterSpecifiedCharUp(v, "_"))
+	}
 
 	if file, err = os.Create(path); err != nil {
 		return err
@@ -161,8 +167,8 @@ func (g *genXormDao) createProgramDaoFile(path, tName string) error {
 		Package:      tName,
 		PackageUpper: stringx.FirstUp(tName),
 		Project:      g.Project,
+		Cols:         colsUpper,
 	}
-
 	// 解析模板
 	tpl, err := template.ParseFiles("tpl/dao_program.tpl")
 	if err != nil {

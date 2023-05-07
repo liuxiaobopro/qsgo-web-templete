@@ -35,23 +35,97 @@ func (th *demo1Dao) Create(demo1 *models.Demo1) *respx.T {
 }
 
 func (th *demo1Dao) DeleteById(demo1 *models.Demo1) *respx.T {
-	if _, err := th.mysql.Where("id = ?", demo1.Id).Delete(&models.Demo1{}); err != nil {
+	if _, err := th.mysql.Where("Id = ?", demo1.Id).Delete(&models.Demo1{}); err != nil {
 		th.log.Errorw("Demo1Dao.Delete", "err", err)
 		return respx.InternalErrT
 	}
 	return nil
 }
 
+func (th *demo1Dao) DeleteByName(demo1 *models.Demo1) *respx.T {
+	if _, err := th.mysql.Where("Name = ?", demo1.Name).Delete(&models.Demo1{}); err != nil {
+		th.log.Errorw("Demo1Dao.Delete", "err", err)
+		return respx.InternalErrT
+	}
+	return nil
+}
+
+func (th *demo1Dao) DeleteByCreateAt(demo1 *models.Demo1) *respx.T {
+	if _, err := th.mysql.Where("CreateAt = ?", demo1.CreateAt).Delete(&models.Demo1{}); err != nil {
+		th.log.Errorw("Demo1Dao.Delete", "err", err)
+		return respx.InternalErrT
+	}
+	return nil
+}
+
+func (th *demo1Dao) DeleteByUpdateAt(demo1 *models.Demo1) *respx.T {
+	if _, err := th.mysql.Where("UpdateAt = ?", demo1.UpdateAt).Delete(&models.Demo1{}); err != nil {
+		th.log.Errorw("Demo1Dao.Delete", "err", err)
+		return respx.InternalErrT
+	}
+	return nil
+}
+
+
 func (th *demo1Dao) UpdateById(demo1 *models.Demo1) *respx.T {
-	if _, err := th.mysql.Where("id = ?", demo1.Id).Update(demo1); err != nil {
+	if _, err := th.mysql.Where("Id = ?", demo1.Id).Update(demo1); err != nil {
 		th.log.Errorw("Demo1Dao.Update", "err", err)
 		return respx.InternalErrT
 	}
 	return nil
 }
 
+func (th *demo1Dao) UpdateByName(demo1 *models.Demo1) *respx.T {
+	if _, err := th.mysql.Where("Name = ?", demo1.Name).Update(demo1); err != nil {
+		th.log.Errorw("Demo1Dao.Update", "err", err)
+		return respx.InternalErrT
+	}
+	return nil
+}
+
+func (th *demo1Dao) UpdateByCreateAt(demo1 *models.Demo1) *respx.T {
+	if _, err := th.mysql.Where("CreateAt = ?", demo1.CreateAt).Update(demo1); err != nil {
+		th.log.Errorw("Demo1Dao.Update", "err", err)
+		return respx.InternalErrT
+	}
+	return nil
+}
+
+func (th *demo1Dao) UpdateByUpdateAt(demo1 *models.Demo1) *respx.T {
+	if _, err := th.mysql.Where("UpdateAt = ?", demo1.UpdateAt).Update(demo1); err != nil {
+		th.log.Errorw("Demo1Dao.Update", "err", err)
+		return respx.InternalErrT
+	}
+	return nil
+}
+
+
 func (th *demo1Dao) DetailById(demo1 *models.Demo1) (*models.Demo1, *respx.T) {
-	if _, err := th.mysql.Where("id = ?", demo1.Id).Get(demo1); err != nil {
+	if _, err := th.mysql.Where("Id = ?", demo1.Id).Get(demo1); err != nil {
+		th.log.Errorw("Demo1Dao.Detail", "err", err)
+		return nil, respx.InternalErrT
+	}
+	return demo1, nil
+}
+
+func (th *demo1Dao) DetailByName(demo1 *models.Demo1) (*models.Demo1, *respx.T) {
+	if _, err := th.mysql.Where("Name = ?", demo1.Name).Get(demo1); err != nil {
+		th.log.Errorw("Demo1Dao.Detail", "err", err)
+		return nil, respx.InternalErrT
+	}
+	return demo1, nil
+}
+
+func (th *demo1Dao) DetailByCreateAt(demo1 *models.Demo1) (*models.Demo1, *respx.T) {
+	if _, err := th.mysql.Where("CreateAt = ?", demo1.CreateAt).Get(demo1); err != nil {
+		th.log.Errorw("Demo1Dao.Detail", "err", err)
+		return nil, respx.InternalErrT
+	}
+	return demo1, nil
+}
+
+func (th *demo1Dao) DetailByUpdateAt(demo1 *models.Demo1) (*models.Demo1, *respx.T) {
+	if _, err := th.mysql.Where("UpdateAt = ?", demo1.UpdateAt).Get(demo1); err != nil {
 		th.log.Errorw("Demo1Dao.Detail", "err", err)
 		return nil, respx.InternalErrT
 	}
