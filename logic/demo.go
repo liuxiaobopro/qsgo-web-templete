@@ -38,7 +38,7 @@ func (th *demoLogic) Detail(in *req.DemoDetailReq) (*reply.DemoDetailReply, *res
 		demo = &models.Demo{}
 		err  *respx.T
 	)
-	if demo, err = mysqlDao.DemoDao.Detail(in.Id); err != nil {
+	if demo, err = mysqlDao.DemoDao.DetailById(&models.Demo{Id: in.Id}); err != nil {
 		return nil, err
 	}
 	return &reply.DemoDetailReply{

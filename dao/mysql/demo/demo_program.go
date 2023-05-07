@@ -1,4 +1,7 @@
-package dao
+/**
+这个文件有系统自动生成,请勿修改
+*/
+package demo
 
 import (
 	"qsgo-web-templete/global"
@@ -68,3 +71,4 @@ func (th *demoDao) List() (*respx.List, *respx.T) {
 	}
 	return &respx.List{Count: count, List: demos}, nil
 }
+

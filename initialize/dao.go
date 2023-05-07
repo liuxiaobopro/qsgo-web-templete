@@ -5,7 +5,7 @@ import (
 )
 
 func Dao() {
-	gxd := NewGenXormDao(global.DB, global.GetMysqlDaoPath(), global.Conf.Mysql.Prefix)
+	gxd := NewGenXormDao(global.DB, global.GetDaoMysqlPath(), global.Conf.Mysql.Prefix, global.GetProjectName())
 	if err := gxd.Gen(); err != nil {
 		panic(err)
 	}

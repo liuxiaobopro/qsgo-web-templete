@@ -13,3 +13,13 @@ type Demo struct {
 func (m *Demo) TableComment() string {
 	return "demo"
 }
+
+type Demo1 struct {
+	Id                    int    `xorm:"not null pk autoincr INT" json:"id"`
+	Name                  string `xorm:"VARCHAR(255)" json:"name"`
+	typesx.ModelCUExtends `xorm:"extends"`
+}
+
+func (m *Demo1) TableComment() string {
+	return "demo1"
+}
