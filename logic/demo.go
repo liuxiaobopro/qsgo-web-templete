@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"qsgo-web-templete/dao"
+	mysqlDao "qsgo-web-templete/dao/mysql"
 	"qsgo-web-templete/models"
 	"qsgo-web-templete/types/reply"
 	"qsgo-web-templete/types/req"
@@ -38,7 +38,7 @@ func (th *demoLogic) Detail(in *req.DemoDetailReq) (*reply.DemoDetailReply, *res
 		demo = &models.Demo{}
 		err  *respx.T
 	)
-	if demo, err = dao.DemoDao.Detail(in.Id); err != nil {
+	if demo, err = mysqlDao.DemoDao.Detail(in.Id); err != nil {
 		return nil, err
 	}
 	return &reply.DemoDetailReply{
@@ -71,10 +71,8 @@ func (th *demoLogic) Delete(in *req.DemoDeleteReq) (*reply.DemoDeleteReply, *res
 	return out, nil
 }
 
-
 func (th *demoLogic) Create(in *req.DemoCreateReq) (*reply.DemoCreateReply, *respx.T) {
 	//TODO: write your logic here
 	out := &reply.DemoCreateReply{}
 	return out, nil
 }
-	

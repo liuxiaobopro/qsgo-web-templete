@@ -1,9 +1,9 @@
 package initialize
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"xorm.io/xorm"
 )
@@ -13,15 +13,20 @@ type genXormDao struct {
 	DaoPath string       // 生成的dao文件绝对路径
 	Prefix  string       // 前缀(用于dao文件的生成是否有前缀和package名, 建议传)
 
-	programDaoFileName string      // 程序生成的dao文件名
-	userDaoFileName    string      // 用户可修改dao文件名
-	tableInfo          []tableInfo // 表信息
+	tableInfo []tableInfo // 表信息
 }
 
 type tableInfo struct {
-	tableName string   // 表名
-	cols      []string // 列名
+	tableName          string   // 表名
+	cols               []string // 列名
+	programDaoFileName string   // 程序生成的dao文件名
+	userDaoFileName    string   // 用户可修改dao文件名
 }
+
+var (
+	programDaoFileName = "%s_program.go" // 程序生成的dao文件名
+	userDaoFileName    = "%s_default.go" // 用户可修改dao文件名
+)
 
 func NewGenXormDao(mysql *xorm.Engine, daoPath, prefix string) *genXormDao {
 	if mysql == nil {
@@ -34,9 +39,6 @@ func NewGenXormDao(mysql *xorm.Engine, daoPath, prefix string) *genXormDao {
 		Mysql:   mysql,
 		DaoPath: daoPath,
 		Prefix:  prefix,
-
-		programDaoFileName: "%s_program.go",
-		userDaoFileName:    "%s.go",
 	}
 }
 
@@ -49,15 +51,27 @@ func (g *genXormDao) InitData() error {
 
 	// 获取所有表列名
 	for _, table := range tables {
-		fmt.Printf("table name: %s\n", table.Name)
+		// fmt.Printf("table name: %s\n", table.Name)
 		ti := tableInfo{
 			tableName: table.Name,
 		}
-		g.programDaoFileName = fmt.Sprintf(g.programDaoFileName, table.Name)
-		g.userDaoFileName = fmt.Sprintf(g.userDaoFileName, table.Name)
 
 		for _, col := range table.Columns() {
 			ti.cols = append(ti.cols, col.Name)
+			// 判断前缀
+			if g.Prefix != "" {
+				// 判断表名前缀是否正确(防止乱传, 不匹配就不截取了)
+				if strings.HasPrefix(table.Name, g.Prefix) {
+					ti.programDaoFileName = fmt.Sprintf(programDaoFileName, table.Name[len(g.Prefix):])
+					ti.userDaoFileName = fmt.Sprintf(userDaoFileName, table.Name[len(g.Prefix):])
+				} else {
+					ti.programDaoFileName = fmt.Sprintf(programDaoFileName, table.Name)
+					ti.userDaoFileName = fmt.Sprintf(userDaoFileName, table.Name)
+				}
+			} else {
+				ti.programDaoFileName = fmt.Sprintf(programDaoFileName, table.Name)
+				ti.userDaoFileName = fmt.Sprintf(userDaoFileName, table.Name)
+			}
 		}
 		g.tableInfo = append(g.tableInfo, ti)
 	}
@@ -70,14 +84,18 @@ func (g *genXormDao) Gen() error {
 	}
 
 	for _, v := range g.tableInfo {
-		fmt.Println("table name: ", v.tableName)
-
-		programDaoFilePath := g.DaoPath + "/" + g.programDaoFileName
-		userDaoFilePath := g.DaoPath + "/" + g.userDaoFileName
+		// fmt.Println("table name: ", v.tableName)
+		programDaoFilePath := g.DaoPath + "/" + v.programDaoFileName
+		userDaoFilePath := g.DaoPath + "/" + v.userDaoFileName
 
 		if _, err := os.Stat(programDaoFilePath); err != nil {
 			if !os.IsNotExist(err) {
 				return err
+			} else {
+				// 文件不存在，创建
+				if _, err := os.Create(programDaoFilePath); err != nil {
+					return err
+				}
 			}
 		} else {
 			// 文件存在，删除
@@ -104,13 +122,4 @@ func (g *genXormDao) Gen() error {
 	}
 
 	return nil
-}
-
-func (g *genXormDao) printJson() {
-	b, err := json.Marshal(g)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("genXormDao1 info: %s\n", string(b))
-	fmt.Printf("genXormDao2 info: %v\n", g)
 }

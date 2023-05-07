@@ -8,6 +8,6 @@ func main() {
 	initialize.Config()
 	initialize.Log()
 	initialize.Db()
-	// initialize.Dao()
+	initialize.Dao()
 	initialize.Http()
 }
