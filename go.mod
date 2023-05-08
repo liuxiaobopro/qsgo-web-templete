@@ -6,7 +6,7 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-sql-driver/mysql v1.7.1
-	github.com/liuxiaobopro/gobox v0.0.25
+	github.com/liuxiaobopro/gobox v0.1.3
 	github.com/spf13/viper v1.15.0
 	go.uber.org/zap v1.24.0
 	xorm.io/core v0.7.3
