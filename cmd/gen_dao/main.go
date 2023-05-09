@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	_ "github.com/go-sql-driver/mysql"
 	xormx "github.com/liuxiaobopro/gobox/xorm"
 	"xorm.io/xorm"
 )
@@ -14,7 +15,7 @@ func main() {
 	}
 	gxd := xormx.NewGenXormDao(
 		xormx.WithMysql(engine),
-		xormx.WithDaoMysqlPath("dao/mysql"),
+		xormx.WithDaoMysqlPath("../../dao/mysql"),
 		xormx.WithProject("qsgo-web-templete"),
 		xormx.WithPrefix("qsgo_"),
 		xormx.WithProgramTemplatePath("./tpl/dao_default.tpl"),
