@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"qsgo-web-templete/global"
+	"qsgo-web-templete/middleware"
 	"qsgo-web-templete/router"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,7 @@ import (
 func Http() {
 	r := gin.Default()
 
+	r.Use(middleware.Recover())
 	router.AddRouter(r)
 
 	srv := &http.Server{
@@ -30,11 +32,14 @@ func Http() {
 		}
 	}()
 
-	fmt.Println("Server Run:", fmt.Sprintf("http://localhost:%d", global.Conf.Http.Port))
+	fmt.Println("Server Run:", fmt.Sprintf("http://127.0.0.1:%d", global.Conf.Http.Port))
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
+	//#region 优雅退出
+	global.DB.Close()
+	//#endregion
 	global.ZapS.Info("Shutdown Server ...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)

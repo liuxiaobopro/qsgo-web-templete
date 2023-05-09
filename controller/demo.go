@@ -47,7 +47,7 @@ func (th *demoHandle) IndexPost(c *gin.Context) {
 
 func (th *demoHandle) Detail(c *gin.Context) {
 	var r req.DemoDetailReq
-	if err := th.ShouldBind(c, &r); err != nil { // get=>ShouldBind post=>ShouldBindJSON
+	if err := th.ShouldBindUri(c, &r); err != nil { // get=>ShouldBind post=>ShouldBindJSON
 		th.ReturnErr(c, respx.ParamErrT)
 		return
 	}
