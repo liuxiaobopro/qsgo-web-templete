@@ -1,7 +1,7 @@
 package logic
 
 import (
-	mysqlDao "qsgo-web-templete/dao/mysql"
+	demoMysqlDao "qsgo-web-templete/dao/mysql/demo"
 	"qsgo-web-templete/models"
 	"qsgo-web-templete/types/reply"
 	"qsgo-web-templete/types/req"
@@ -35,15 +35,15 @@ func (th *demoLogic) IndexPost(in *req.DemoPostReq) (*reply.DemoPostReply, *resp
 
 func (th *demoLogic) Detail(in *req.DemoDetailReq) (*reply.DemoDetailReply, *respx.T) {
 	var (
-		demo = &models.Demo{}
-		err  *respx.T
+		d   *models.Demo
+		err *respx.T
 	)
-	if demo, err = mysqlDao.DemoDao.DetailById(&models.Demo{Id: in.Id}); err != nil {
+	if d, err = demoMysqlDao.DemoDao.DetailById(&models.Demo{Id: in.Id}); err != nil {
 		return nil, err
 	}
 	return &reply.DemoDetailReply{
-		Id:   demo.Id,
-		Name: demo.Name,
+		Id:   d.Id,
+		Name: d.Name,
 	}, nil
 }
 

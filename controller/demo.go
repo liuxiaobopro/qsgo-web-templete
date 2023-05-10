@@ -47,7 +47,7 @@ func (th *demoHandle) IndexPost(c *gin.Context) {
 
 func (th *demoHandle) Detail(c *gin.Context) {
 	var r req.DemoDetailReq
-	if err := th.ShouldBindUri(c, &r); err != nil { // get=>ShouldBind post=>ShouldBindJSON
+	if err := th.ShouldBindUri(c, &r); err != nil {
 		th.ReturnErr(c, respx.ParamErrT)
 		return
 	}
@@ -61,7 +61,7 @@ func (th *demoHandle) Detail(c *gin.Context) {
 
 func (th *demoHandle) List(c *gin.Context) {
 	var r req.DemoListReq
-	if err := th.ShouldBind(c, &r); err != nil { // get=>ShouldBind post=>ShouldBindJSON
+	if err := th.ShouldBind(c, &r); err != nil {
 		th.ReturnErr(c, respx.ParamErrT)
 		return
 	}
@@ -75,7 +75,7 @@ func (th *demoHandle) List(c *gin.Context) {
 
 func (th *demoHandle) Update(c *gin.Context) {
 	var r req.DemoUpdateReq
-	if err := th.ShouldBind(c, &r); err != nil { // get=>ShouldBind post=>ShouldBindJSON
+	if err := th.ShouldBind(c, &r); err != nil {
 		th.ReturnErr(c, respx.ParamErrT)
 		return
 	}
@@ -89,7 +89,7 @@ func (th *demoHandle) Update(c *gin.Context) {
 
 func (th *demoHandle) Delete(c *gin.Context) {
 	var r req.DemoDeleteReq
-	if err := th.ShouldBind(c, &r); err != nil { // get=>ShouldBind post=>ShouldBindJSON
+	if err := th.ShouldBind(c, &r); err != nil {
 		th.ReturnErr(c, respx.ParamErrT)
 		return
 	}
@@ -103,7 +103,7 @@ func (th *demoHandle) Delete(c *gin.Context) {
 
 func (th *demoHandle) Create(c *gin.Context) {
 	var r req.DemoCreateReq
-	if err := th.ShouldBind(c, &r); err != nil { // get=>ShouldBind post=>ShouldBindJSON
+	if err := th.ShouldBind(c, &r); err != nil {
 		th.ReturnErr(c, respx.ParamErrT)
 		return
 	}
