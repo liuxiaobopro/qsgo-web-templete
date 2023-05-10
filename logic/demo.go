@@ -14,26 +14,6 @@ type demoLogic struct{}
 
 var Demologic = &demoLogic{}
 
-// IndexGet get请求
-func (th *demoLogic) IndexGet(in *req.DemoGetReq) (*reply.DemoGetReply, *replyx.T) {
-	//TODO: write your logic here
-	out := &reply.DemoGetReply{
-		Id:   in.Id,
-		Name: "IndexGet",
-	}
-	return out, nil
-}
-
-// IndexPost post请求
-func (th *demoLogic) IndexPost(in *req.DemoPostReq) (*reply.DemoPostReply, *replyx.T) {
-	//TODO: write your logic here
-	out := &reply.DemoPostReply{
-		Id:   in.Id,
-		Name: "IndexPost",
-	}
-	return out, nil
-}
-
 func (th *demoLogic) Create(in *req.DemoCreateReq) (*reply.DemoCreateReply, *replyx.T) {
 	var (
 		i = &models.Demo{

@@ -19,15 +19,12 @@ func AddRouter(r *gin.Engine) {
 			var conf = global.Conf
 			c.JSON(http.StatusOK, conf)
 		})
+		//#region demo
+		r.GET("/demo/:id", controller.DemoController.Detail)
+		r.GET("/demo", controller.DemoController.List)
+		r.PUT("/demo/:id", controller.DemoController.Update)
+		r.POST("/demo", controller.DemoController.Create)
+		r.DELETE("/demo/:id", controller.DemoController.Delete)
+		//#endregion
 	}
-
-	//#region demo
-	// r.GET("/demo", controller.DemoController.IndexGet)
-	// r.POST("/demo", controller.DemoController.IndexPost)
-	r.GET("/demo/:id", controller.DemoController.Detail)
-	r.GET("/demo", controller.DemoController.List)
-	r.PUT("/demo/:id", controller.DemoController.Update)
-	r.POST("/demo", controller.DemoController.Create)
-	r.DELETE("/demo/:id", controller.DemoController.Delete)
-	//#endregion
 }
