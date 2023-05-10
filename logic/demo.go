@@ -2,11 +2,12 @@ package logic
 
 import (
 	demoMysqlDao "qsgo-web-templete/dao/mysql/demo"
+	"qsgo-web-templete/define/error"
+	"qsgo-web-templete/define/types/reply"
+	"qsgo-web-templete/define/types/req"
 	"qsgo-web-templete/models"
-	"qsgo-web-templete/types/reply"
-	"qsgo-web-templete/types/req"
 
-	respx "github.com/liuxiaobopro/gobox/resp"
+	replyx "github.com/liuxiaobopro/gobox/reply"
 )
 
 type demoLogic struct{}
@@ -14,7 +15,7 @@ type demoLogic struct{}
 var Demologic = &demoLogic{}
 
 // IndexGet get请求
-func (th *demoLogic) IndexGet(in *req.DemoGetReq) (*reply.DemoGetReply, *respx.T) {
+func (th *demoLogic) IndexGet(in *req.DemoGetReq) (*reply.DemoGetReply, *replyx.T) {
 	//TODO: write your logic here
 	out := &reply.DemoGetReply{
 		Id:   in.Id,
@@ -24,7 +25,7 @@ func (th *demoLogic) IndexGet(in *req.DemoGetReq) (*reply.DemoGetReply, *respx.T
 }
 
 // IndexPost post请求
-func (th *demoLogic) IndexPost(in *req.DemoPostReq) (*reply.DemoPostReply, *respx.T) {
+func (th *demoLogic) IndexPost(in *req.DemoPostReq) (*reply.DemoPostReply, *replyx.T) {
 	//TODO: write your logic here
 	out := &reply.DemoPostReply{
 		Id:   in.Id,
@@ -33,11 +34,68 @@ func (th *demoLogic) IndexPost(in *req.DemoPostReq) (*reply.DemoPostReply, *resp
 	return out, nil
 }
 
-func (th *demoLogic) Detail(in *req.DemoDetailReq) (*reply.DemoDetailReply, *respx.T) {
+func (th *demoLogic) Create(in *req.DemoCreateReq) (*reply.DemoCreateReply, *replyx.T) {
+	var (
+		i = &models.Demo{
+			Name: in.Name,
+		}
+		out = &reply.DemoCreateReply{}
+	)
+	if has, err := demoMysqlDao.DemoDao.ExistByName(i); err != nil {
+		return nil, err
+	} else if has {
+		return nil, replyx.ExistErrT
+	}
+	if err := demoMysqlDao.DemoDao.Create(i); err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (th *demoLogic) Delete(in *req.DemoDeleteReq) (*reply.DemoDeleteReply, *replyx.T) {
+	var (
+		out = &reply.DemoDeleteReply{}
+	)
+	if has, err := demoMysqlDao.DemoDao.ExistById(&models.Demo{Id: in.Id}); err != nil {
+		return nil, err
+	} else if !has {
+		return nil, replyx.NotFoundErrT
+	}
+
+	if err := demoMysqlDao.DemoDao.DeleteById(&models.Demo{Id: in.Id}); err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
+
+func (th *demoLogic) Update(in *req.DemoUpdateReq) (*reply.DemoUpdateReply, *replyx.T) {
+	var (
+		out = &reply.DemoUpdateReply{}
+	)
+	if has, err := demoMysqlDao.DemoDao.ExistById(&models.Demo{Id: in.Id}); err != nil {
+		return nil, err
+	} else if !has {
+		return nil, replyx.NotFoundErrT
+	}
+
+	if err := demoMysqlDao.DemoDao.UpdateById(&models.Demo{Id: in.Id, Name: in.Name}); err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (th *demoLogic) Detail(in *req.DemoDetailReq) (*reply.DemoDetailReply, *replyx.T) {
 	var (
 		d   *models.Demo
-		err *respx.T
+		err *replyx.T
 	)
+	if has, err := demoMysqlDao.DemoDao.ExistById(&models.Demo{Id: in.Id}); err != nil {
+		return nil, err
+	} else if !has {
+		return nil, error.ItemNotExist
+		// return nil, replyx.NotFoundErrT
+	}
 	if d, err = demoMysqlDao.DemoDao.DetailById(&models.Demo{Id: in.Id}); err != nil {
 		return nil, err
 	}
@@ -47,32 +105,13 @@ func (th *demoLogic) Detail(in *req.DemoDetailReq) (*reply.DemoDetailReply, *res
 	}, nil
 }
 
-func (th *demoLogic) List(in *req.DemoListReq) (*reply.DemoListReply, *respx.T) {
-	//TODO: write your logic here
-	out := &reply.DemoListReply{}
-	return out, nil
-}
-
-func (th *demoLogic) Update(in *req.DemoUpdateReq) (*reply.DemoUpdateReply, *respx.T) {
-	//TODO: write your logic here
-	out := &reply.DemoUpdateReply{}
-	return out, nil
-}
-
-func (th *demoLogic) Add(in *req.DemoAddReq) (*reply.DemoAddReply, *respx.T) {
-	//TODO: write your logic here
-	out := &reply.DemoAddReply{}
-	return out, nil
-}
-
-func (th *demoLogic) Delete(in *req.DemoDeleteReq) (*reply.DemoDeleteReply, *respx.T) {
-	//TODO: write your logic here
-	out := &reply.DemoDeleteReply{}
-	return out, nil
-}
-
-func (th *demoLogic) Create(in *req.DemoCreateReq) (*reply.DemoCreateReply, *respx.T) {
-	//TODO: write your logic here
-	out := &reply.DemoCreateReply{}
-	return out, nil
+func (th *demoLogic) List(in *req.DemoListReq) (*reply.DemoListReply, *replyx.T) {
+	var (
+		list *replyx.List
+		err  *replyx.T
+	)
+	if list, err = demoMysqlDao.DemoDao.List(in.Page, in.Size); err != nil {
+		return nil, err
+	}
+	return &reply.DemoListReply{List: list}, nil
 }
