@@ -12,7 +12,7 @@
             "program": "${fileDirname}",
             "args": [
                 "-c",
-                "lxb",
+                "dev",
                 "-p",
                 "10001"
             ]
