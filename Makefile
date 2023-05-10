@@ -26,13 +26,3 @@ clean:
 run: tidy clean windows
 	@echo "Running..."
 	@$(BIN_PATH).exe $(ARGS)
-
-gen dao:
-	@echo "Generating dao..."
-	@go run cmd/dao/main.go
-	@echo "Done! $(shell date "+%Y-%m-%d %H:%M:%S")"
-
-gen model:
-	@echo "Generating model..."
-	@reverse -f reverse.yml
-	@echo "Done! $(shell date "+%Y-%m-%d %H:%M:%S")"
