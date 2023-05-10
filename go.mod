@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/gin-gonic/gin v1.9.0
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-sql-driver/mysql v1.7.1
 	github.com/liuxiaobopro/gobox v0.1.7
 	github.com/spf13/viper v1.15.0

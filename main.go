@@ -8,5 +8,6 @@ func main() {
 	initialize.Config()
 	initialize.Log()
 	initialize.Db()
+	initialize.Redis()
 	initialize.Http()
 }

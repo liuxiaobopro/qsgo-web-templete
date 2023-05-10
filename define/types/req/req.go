@@ -26,3 +26,7 @@ type DemoDeleteReq struct {
 type DemoCreateReq struct {
 	Name string `form:"name" json:"name" uri:"name" binding:"required"`
 }
+
+
+type DemoRedisReq struct {}
+	

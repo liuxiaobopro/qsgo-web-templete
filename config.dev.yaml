@@ -1,3 +1,7 @@
 mysql:
   dns: "root:111111@tcp(192.168.3.74:3306)/demo?charset=utf8mb4"
   prefix: "qsgo_"
+
+redis:
+  dns: "192.168.3.74:6379"
+  db: 0

@@ -2,6 +2,7 @@ package logic
 
 import (
 	demoMysqlDao "qsgo-web-templete/dao/mysql/demo"
+	redisDao "qsgo-web-templete/dao/redis"
 	"qsgo-web-templete/define/error"
 	"qsgo-web-templete/define/types/reply"
 	"qsgo-web-templete/define/types/req"
@@ -94,4 +95,32 @@ func (th *demoLogic) List(in *req.DemoListReq) (*reply.DemoListReply, *replyx.T)
 		return nil, err
 	}
 	return &reply.DemoListReply{List: list}, nil
+}
+
+func (th *demoLogic) Redis(in *req.DemoRedisReq) (*reply.DemoRedisReply, *replyx.T) {
+	// if err := redisDao.SetString(); err != nil {
+	// 	return nil, replyx.InternalErrT
+	// }
+
+	// if s, err := redisDao.GetString(); err != nil {
+	// 	return nil, replyx.InternalErrT
+	// } else {
+	// 	return &reply.DemoRedisReply{Value: s}, nil
+	// }
+
+	// if s, err := redisDao.GetStringNotFound(); err != nil {
+	// 	if err == redis.Nil {
+	// 		return &reply.DemoRedisReply{Value: ""}, nil
+	// 	} else {
+	// 		return nil, replyx.InternalErrT
+	// 	}
+	// } else {
+	// 	return &reply.DemoRedisReply{Value: s}, nil
+	// }
+
+	if err := redisDao.SetHash(); err != nil {
+		return nil, replyx.InternalErrT
+	}
+
+	return nil, nil
 }

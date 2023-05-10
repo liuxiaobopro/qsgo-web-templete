@@ -5,6 +5,7 @@ import (
 
 	"qsgo-web-templete/config"
 
+	"github.com/go-redis/redis"
 	otherx "github.com/liuxiaobopro/gobox/other"
 	"go.uber.org/zap"
 	"xorm.io/xorm"
@@ -16,9 +17,10 @@ const (
 )
 
 var (
-	ZapS *zap.SugaredLogger
-	Conf config.Conf
-	DB   *xorm.Engine
+	ZapS  *zap.SugaredLogger
+	Conf  config.Conf
+	DB    *xorm.Engine
+	Redis *redis.Client
 
 	rootPath     string
 	daoPath      string

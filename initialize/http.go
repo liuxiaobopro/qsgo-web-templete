@@ -39,6 +39,7 @@ func Http() {
 	<-quit
 	//#region 优雅退出
 	global.DB.Close()
+	global.Redis.Close()
 	//#endregion
 	global.ZapS.Info("Shutdown Server ...")
 

@@ -25,6 +25,7 @@ func AddRouter(r *gin.Engine) {
 		r.PUT("/demo/:id", controller.DemoController.Update)
 		r.POST("/demo", controller.DemoController.Create)
 		r.DELETE("/demo/:id", controller.DemoController.Delete)
+		r.GET("/redis", controller.DemoController.Redis)
 		//#endregion
 	}
 }

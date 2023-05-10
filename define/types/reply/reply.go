@@ -20,3 +20,7 @@ type DemoAddReply struct{}
 type DemoDeleteReply struct{}
 
 type DemoCreateReply struct{}
+
+type DemoRedisReply struct {
+	Value string `json:"value"`
+}

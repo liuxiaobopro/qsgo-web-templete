@@ -88,3 +88,17 @@ func (th *demoHandle) List(c *gin.Context) {
 	}
 	th.RetuenOk(c, data)
 }
+
+func (th *demoHandle) Redis(c *gin.Context) {
+	var r req.DemoRedisReq
+	if err := th.ShouldBind(c, &r); err != nil {
+		th.ReturnErr(c, replyx.ParamErrT)
+		return
+	}
+	data, err := logic.Demologic.Redis(&r)
+	if err != nil {
+		th.ReturnErr(c, err)
+		return
+	}
+	th.RetuenOk(c, data)
+}
