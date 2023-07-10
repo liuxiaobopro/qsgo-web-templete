@@ -1,5 +1,5 @@
 {
-	// Place your qsgo-web-templete 工作区 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// Place your today-earth-admin-api 工作区 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
 	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
 	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
 	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
@@ -15,11 +15,38 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-	"logger": {
-		"prefix": "gz",
+	"basetemp": {
+		"prefix": "basetemp",
 		"body": [
-			"global.ZapS"
+			"{{ define \"$1\" }}",
+			"{{ template \"base/header\" .}}",
+			"<style></style>",
+			"{{ template \"base/main1\" .}}",
+			"",
+			"{{ template \"base/main2\" .}}",
+			"<script></script>",
+			"{{ template \"base/footer\" .}}",
+			"{{ end }}"
 		],
-		"description": "global.ZapS"
+		"description": "basetemp"
+	},
+	"try catch": {
+		"prefix": "try",
+		"body": [
+			"dbSession := global.DB.NewSession()",
+			"defer dbSession.Close()",
+			"if err := dbSession.Begin(); err != nil {",
+			"\treturn replyx.InternalErrT",
+			"}",
+			"",
+			"//#region 业务",
+			"$1",
+			"//#endregion",
+			"",
+			"if err := dbSession.Commit(); err != nil {",
+			"\treturn replyx.InternalErrT",
+			"}"
+		],
+		"description": "try catch"
 	}
 }

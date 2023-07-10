@@ -3,23 +3,11 @@ package initialize
 import (
 	"qsgo-web-templete/global"
 
-	"go.uber.org/zap"
+	logx "github.com/liuxiaobopro/gobox/log"
 )
 
 func Log() {
-	var (
-		logger *zap.Logger
-		err    error
-	)
-	if global.Conf.Runmode == global.PROD {
-		logger, err = zap.NewProduction()
-	} else {
-		logger, err = zap.NewDevelopment()
-	}
-	if err != nil {
-		panic(err)
-	}
-	defer logger.Sync()
-	sugar := logger.Sugar()
-	global.ZapS = sugar
+	logger := logx.NewGin()
+
+	global.Logger = logger
 }

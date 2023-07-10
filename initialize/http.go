@@ -13,12 +13,18 @@ import (
 	"qsgo-web-templete/router"
 
 	"github.com/gin-gonic/gin"
+	ginMiddleware "github.com/liuxiaobopro/gobox/gin/middleware"
 )
 
 func Http() {
 	r := gin.Default()
 
-	r.Use(middleware.Recover())
+	r.Static("/s", "./static")
+
+	r.Use(ginMiddleware.Trace())
+	r.Use(ginMiddleware.Cors())
+	r.Use(middleware.Recover(global.Conf.Runmode != global.PROD))
+	r.Use(ginMiddleware.Print(global.Logger))
 	router.AddRouter(r)
 
 	srv := &http.Server{

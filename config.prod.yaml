@@ -1,2 +1,2 @@
 mysql:
-  dns: "root:111111@tcp(127.0.0.1:3306)/qsgo?charset=utf8mb4"
+  dns: "qsgo-web-templete:pxe6iXMNxCj4hf4B@tcp(127.0.0.1:3306)/qsgo-web-templete?charset=utf8mb4"

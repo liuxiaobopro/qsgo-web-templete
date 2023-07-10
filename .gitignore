@@ -21,5 +21,4 @@
 go.work
 
 bin/
-.vscode/launch.json
 config.lxb.yaml

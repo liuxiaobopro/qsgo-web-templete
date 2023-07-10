@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	engine, err := xorm.NewEngine("mysql", "root:111111@tcp(192.168.3.74:3306)/demo?charset=utf8mb4")
+	engine, err := xorm.NewEngine("mysql", "qsgo-web-templete:pxe6iXMNxCj4hf4B@tcp(127.0.0.1:3306)/qsgo-web-templete?charset=utf8mb4")
 	if err != nil {
 		panic(err)
 	}
@@ -17,7 +17,7 @@ func main() {
 		xormx.WithMysql(engine),
 		xormx.WithDaoMysqlPath("../../dao/mysql"),
 		xormx.WithProject("qsgo-web-templete"),
-		xormx.WithPrefix("qsgo_"),
+		xormx.WithPrefix(""),
 		xormx.WithProgramTemplatePath("./tpl/dao_default.tpl"),
 		xormx.WithDefaultTemplatePath("./tpl/dao_program.tpl"),
 	)

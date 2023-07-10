@@ -2,7 +2,7 @@ kind: reverse
 name: mydb
 source:
   database: mysql
-  conn_str: 'root:111111@tcp(192.168.3.74:3306)/demo?charset=utf8mb4'
+  conn_str: 'qsgo-web-templete:pxe6iXMNxCj4hf4B@tcp(127.0.0.1:3306)/qsgo-web-templete?charset=utf8mb4'
 targets:
 - type: codes
   include_tables: # 包含的表，以下可以用 **

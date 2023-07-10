@@ -6,6 +6,7 @@ import (
 	"qsgo-web-templete/config"
 
 	"github.com/go-redis/redis"
+	logx "github.com/liuxiaobopro/gobox/log"
 	otherx "github.com/liuxiaobopro/gobox/other"
 	"go.uber.org/zap"
 	"xorm.io/xorm"
@@ -17,10 +18,11 @@ const (
 )
 
 var (
-	ZapS  *zap.SugaredLogger
-	Conf  config.Conf
-	DB    *xorm.Engine
-	Redis *redis.Client
+	ZapS   *zap.SugaredLogger
+	Logger *logx.Gin
+	Conf   config.Conf
+	DB     *xorm.Engine
+	Redis  *redis.Client
 
 	rootPath     string
 	daoPath      string
@@ -57,4 +59,8 @@ func GetProjectName() string {
 		}
 	}
 	return projectName
+}
+
+func DbSession() *xorm.Session {
+	return DB.Where("delete_at IS NULL")
 }
